@@ -1,0 +1,26 @@
+{
+  "name": "Business day Calculator",
+  "description": "Calcualte Business Day",
+  "main": "Main.xaml",
+  "dependencies": {
+    "UiPath.Excel.Activities": "[2.3.6682.26635]",
+    "UiPath.Mail.Activities": "[1.1.6562.21018]",
+    "UiPath.System.Activities": "[18.3.6848.19314]",
+    "UiPath.UIAutomation.Activities": "[18.3.6877.28298]"
+  },
+  "schemaVersion": "3.2",
+  "studioVersion": "18.1.1.13",
+  "projectVersion": "1.0.6715.19687",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ]
+  },
+  "projectType": "Workflow",
+  "libraryOptions": {
+    "includeOriginalXaml": false,
+    "privateWorkflows": []
+  }
+}
