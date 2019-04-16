@@ -1,0 +1,29 @@
+{
+  "name": "Final Power Invoice",
+  "description": "Final Power Invoice",
+  "main": "Main.xaml",
+  "dependencies": {
+    "UiPath.Excel.Activities": "[2.3.6682.26635]",
+    "UiPath.Mail.Activities": "[1.1.6562.21018]",
+    "UiPath.System.Activities": "[18.3.6848.19314]",
+    "SendFinalInvoiceActivities": "[1.0.3]",
+    "UiPath.UIAutomation.Activities": "[18.3.6877.28298]",
+    "Google.Sheets.APIs.ReadRange.Activities": "[1.0.4]",
+    "Google.Sheets.API.UpdateRange.Activities": "[1.0.2]"
+  },
+  "schemaVersion": "3.2",
+  "studioVersion": "18.1.1.13",
+  "projectVersion": "1.0.6652.18529",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ]
+  },
+  "projectType": "Workflow",
+  "libraryOptions": {
+    "includeOriginalXaml": false,
+    "privateWorkflows": []
+  }
+}
