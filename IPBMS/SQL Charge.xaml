@@ -1,0 +1,251 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="SQL_Create_Help_History"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="ipbmsDbConnection" Type="InArgument(ui:DatabaseConnection)" />
+    <x:Property Name="needConn" Type="InArgument(x:Boolean)" />
+    <x:Property Name="cid" Type="InArgument(x:String)" />
+    <x:Property Name="charge" Type="InArgument(x:String)" />
+    <x:Property Name="description" Type="InArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>SQL_Create_Help_History_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Database</x:String>
+      <x:String>System.Net</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.Database</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.Python</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="SQL Create Help History" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <If Condition="[needConn=True]" sap2010:WorkflowViewState.IdRef="If_2">
+      <If.Then>
+        <ui:DatabaseConnect DatabaseConnection="[ipbmsDbConnection]" DisplayName="Connect" sap2010:WorkflowViewState.IdRef="DatabaseConnect_1" ProviderName="System.Data.Odbc" ConnectionString="Dsn=49.50.225.11" />
+      </If.Then>
+    </If>
+    <TryCatch DisplayName="SQL Insert History TryCatch" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <TryCatch.Try>
+        <Sequence DisplayName="SQL Insert History Sequence" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="sd:DataTable" Name="dtSQL" />
+            <Variable x:TypeArguments="x:String" Name="stringDtSQL" />
+            <Variable x:TypeArguments="x:String" Name="name" />
+            <Variable x:TypeArguments="x:Int32" Name="affectedRows" />
+            <Variable x:TypeArguments="x:String" Name="totalBalance" />
+          </Sequence.Variables>
+          <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DataTable="[dtSQL]" DisplayName="Execute query" ExistingDbConnection="[ipbmsDbConnection]" sap2010:WorkflowViewState.IdRef="ExecuteQuery_3" Sql="[&quot;SELECT balance AS balance FROM statement WHERE cid = '&quot;+cid+&quot;' ORDER BY sid DESC LIMIT 1&quot;]">
+            <ui:ExecuteQuery.Parameters>
+              <scg:Dictionary x:TypeArguments="x:String, Argument" />
+            </ui:ExecuteQuery.Parameters>
+          </ui:ExecuteQuery>
+          <If Condition="[dtSQL.Rows.Count = 0]" sap2010:WorkflowViewState.IdRef="If_5">
+            <If.Then>
+              <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[totalBalance]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[charge]</InArgument>
+                </Assign.Value>
+              </Assign>
+            </If.Then>
+            <If.Else>
+              <Assign sap2010:WorkflowViewState.IdRef="Assign_3">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[totalBalance]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[(Convert.ToDouble(dtSQL.Rows(0)(0).ToString)+Convert.ToDouble(charge.Trim)).ToString]</InArgument>
+                </Assign.Value>
+              </Assign>
+            </If.Else>
+          </If>
+          <ui:ExecuteNonQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" AffectedRecords="[affectedRows]" CommandType="Text" DisplayName="Execute non query" ExistingDbConnection="[ipbmsDbConnection]" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_1" Sql="[&quot;INSERT INTO statement (cid,act_type,act_date,description,payment_type,amount,balance) &quot;+&#xD;&#xA;&quot;VALUES ('&quot; + cid + &quot;','P','&quot; + DateTime.Now.ToString(&quot;yyyy-MM-dd&quot;) + &quot;','&quot; + description + &quot;','CHARGE','&quot; + charge + &quot;','&quot; + totalBalance + &quot;')&quot;]">
+            <ui:ExecuteNonQuery.Parameters>
+              <scg:Dictionary x:TypeArguments="x:String, Argument" />
+            </ui:ExecuteNonQuery.Parameters>
+          </ui:ExecuteNonQuery>
+          <If Condition="[affectedRows = 1]" sap2010:WorkflowViewState.IdRef="If_4">
+            <If.Then>
+              <ui:ExecuteNonQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" AffectedRecords="[affectedRows]" CommandType="Text" DisplayName="Execute non query" ExistingDbConnection="[ipbmsDbConnection]" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_2" Sql="[&quot;INSERT INTO statementinfos (cid,description,amount,balance,stype,ctype1,ctype2,act_date,created,staff,bigo) &quot;+&#xA;&quot;VALUES (&quot; + cid + &quot;,'&quot; + description + &quot;',&quot; + charge + &quot;,&quot; + totalBalance + &quot;,'C','Z','ZA','&quot; + DateTime.Now.ToString(&quot;yyyy-MM-dd&quot;) + &quot;',now(),'max01',(SELECT sid AS bigo FROM statement ORDER BY sid DESC LIMIT 1))&quot;]">
+                <ui:ExecuteNonQuery.Parameters>
+                  <scg:Dictionary x:TypeArguments="x:String, Argument" />
+                </ui:ExecuteNonQuery.Parameters>
+              </ui:ExecuteNonQuery>
+            </If.Then>
+            <If.Else>
+              <Sequence sap2010:WorkflowViewState.IdRef="Sequence_5">
+                <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" TimeoutMS="{x:Null}" Body="[&quot;SQL Charge Statement table error: &quot;+cid+&quot; - &quot;+description+&quot; - &quot;+charge+Environment.NewLine+&#xA;&quot;Not inserted into statement table&quot;]" DisplayName="Send SMTP Mail Message" Email="max01@megatel.co.nz" EnableSSL="True" sap2010:WorkflowViewState.IdRef="SendMail_2" IsBodyHtml="False" Password="[new System.Net.NetworkCredential(String.Empty, &quot;1200mega&quot;).Password]" Port="587" SecureConnection="Auto" Server="smtp.gmail.com" Subject="[&quot;SQL Charge error: &quot;+cid]" To="sam@megatel.co.nz">
+                  <ui:SendMail.Files>
+                    <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+                  </ui:SendMail.Files>
+                </ui:SendMail>
+                <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Warn" Message="[&quot;-------SQL Error-----&quot;+environment.NewLine+&quot;Not inserted into statement table&quot;]" />
+              </Sequence>
+            </If.Else>
+          </If>
+          <If Condition="[affectedRows = 1]" sap2010:WorkflowViewState.IdRef="If_6">
+            <If.Else>
+              <Sequence sap2010:WorkflowViewState.IdRef="Sequence_6">
+                <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" TimeoutMS="{x:Null}" Body="[&quot;SQL Charge Statementinfos table error: &quot;+cid+&quot; - &quot;+description+&quot; - &quot;+charge+Environment.NewLine+&#xA;&quot;Not inserted into statementinfos table&quot;]" DisplayName="Send SMTP Mail Message" Email="max01@megatel.co.nz" EnableSSL="True" sap2010:WorkflowViewState.IdRef="SendMail_3" IsBodyHtml="False" Password="[new System.Net.NetworkCredential(String.Empty, &quot;1200mega&quot;).Password]" Port="587" SecureConnection="Auto" Server="smtp.gmail.com" Subject="[&quot;SQL Charge error: &quot;+cid]" To="sam@megatel.co.nz">
+                  <ui:SendMail.Files>
+                    <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+                  </ui:SendMail.Files>
+                </ui:SendMail>
+                <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Warn" Message="[&quot;-------SQL Error-----&quot;+environment.NewLine+&quot;Not inserted into statementinfos table&quot;]" />
+              </Sequence>
+            </If.Else>
+          </If>
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence sap2010:WorkflowViewState.IdRef="Sequence_4">
+              <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Warn" Message="[&quot;-------SQL Error-----&quot;+environment.NewLine+exception.ToString]" />
+              <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" TimeoutMS="{x:Null}" Body="[&quot;SQL Charge error: &quot;+cid+&quot; - &quot;+description+&quot; - &quot;+charge]" DisplayName="Send SMTP Mail Message" Email="max01@megatel.co.nz" EnableSSL="True" sap2010:WorkflowViewState.IdRef="SendMail_1" IsBodyHtml="False" Password="[new System.Net.NetworkCredential(String.Empty, &quot;1200mega&quot;).Password]" Port="587" SecureConnection="Auto" Server="smtp.gmail.com" Subject="[&quot;SQL Charge error: &quot;+cid]" To="sam@megatel.co.nz">
+                <ui:SendMail.Files>
+                  <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+                </ui:SendMail.Files>
+              </ui:SendMail>
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+    <If Condition="[needConn=True]" sap2010:WorkflowViewState.IdRef="If_3">
+      <If.Then>
+        <ui:DatabaseDisconnect DatabaseConnection="[ipbmsDbConnection]" DisplayName="Disconnect" sap2010:WorkflowViewState.IdRef="DatabaseDisconnect_1" />
+      </If.Then>
+    </If>
+    <sads:DebugSymbol.Symbol>dytYOlwwNi4gVWlQYXRoXDA1LiBMaWJcSVBCTVNcU1FMIENoYXJnZS54YW1sRk4DtwEOAgEBTwVTCgIBVVQFsAEQAgEIsQEFtQEKAgECTxNPJAIBVlEJUdYBAgFYVgmdARQCARilAQ2sARgCAQmxAROxASQCAQOzAQmzAZsBAgEFUZ0BUa8BAgFcUcEBUdMBAgFbUTBRRQIBWV4LYh0CAU5jC3gQAgFDeQt9IAIBPX4LkAEQAgEokQELnAEQAgEZpgEPpgHLAQIBFqcBD6sBHQIBCrMBM7MBSAIBBl6kAV65AQIBU15pXnICAVFe7wFe4QICAU9jGWMxAgFEZQ9sGAIBSW8PdhgCAUV5uAF5zQECAUF5hgJ5zgQCAUB5X3lvAgE+fhl+LQIBKYABD4QBJAIBN4cBD44BGgIBK5EBGZEBLQIBGpMBD5oBGgIBHKYBfKYByAECARenAb4EpwHRBAIBFacBigGnAeMBAgERpwGUBKcBugQCAQ+nAY8CpwGkAgIBDqcB1gOnAdsDAgENpwH7A6cBiwQCAQynAf8CpwHQAwIBC2o6akICAUxnO2dJAgFKdDp0kAECAUhxO3FJAgFGgAG8AYAB0QECATuAAYoCgAGpBQIBOoABY4ABcwIBOIgBEYwBHwIBLo0BEY0B6AECASyUARGYAR8CAR+ZARGZAe0BAgEdiAGXBYgBqgUCATaIAYwBiAG8AgIBNYgB7QSIAZMFAgEziAHoAogB/QICATKIAa8EiAG0BAIBMYgB1ASIAeQEAgEwiAHYA4gBqQQCAS+NAX6NAeUBAgEtlAGhBZQBtAUCASeUAYwBlAHGAgIBJpQB9wSUAZ0FAgEklAHyApQBhwMCASOUAbkElAG+BAIBIpQB3gSUAe4EAgEhlAHiA5QBswQCASCZAX6ZAeoBAgEe</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="DatabaseConnect_1" sap:VirtualizedContainerService.HintSize="314,59" />
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="464,208" />
+      <sap2010:ViewStateData Id="ExecuteQuery_3" sap:VirtualizedContainerService.HintSize="675,88" />
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="If_5" sap:VirtualizedContainerService.HintSize="675,208" />
+      <sap2010:ViewStateData Id="ExecuteNonQuery_1" sap:VirtualizedContainerService.HintSize="675,88" />
+      <sap2010:ViewStateData Id="ExecuteNonQuery_2" sap:VirtualizedContainerService.HintSize="314,88" />
+      <sap2010:ViewStateData Id="SendMail_2" sap:VirtualizedContainerService.HintSize="314,145" />
+      <sap2010:ViewStateData Id="LogMessage_2" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="336,400">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_4" sap:VirtualizedContainerService.HintSize="675,548" />
+      <sap2010:ViewStateData Id="SendMail_3" sap:VirtualizedContainerService.HintSize="314,145" />
+      <sap2010:ViewStateData Id="LogMessage_3" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="336,400">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_6" sap:VirtualizedContainerService.HintSize="675,548" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="697,1764">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="SendMail_1" sap:VirtualizedContainerService.HintSize="314,145" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="336,400">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Catch`1_1" sap:VirtualizedContainerService.HintSize="400,469">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="464,631" />
+      <sap2010:ViewStateData Id="DatabaseDisconnect_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="464,208" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486,1251">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="SQL_Create_Help_History_1" sap:VirtualizedContainerService.HintSize="526,1371" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
